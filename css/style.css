@@ -1,0 +1,10 @@
+
+.container{
+    width:100%;
+    height: 97vh;
+}
+#gameCanvas{
+    
+    
+    border: 1px solid red;
+}
