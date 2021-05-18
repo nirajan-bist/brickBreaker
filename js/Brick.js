@@ -1,21 +1,36 @@
 class Brick{
-    constructor(){
+    constructor(x=120,y=80,damage=1){
         this.type = null; //ice soid metal
-        this.damage = null;
+        this.damage = damage;
         this.power = null;
-        this.width = 170;
-        this.height = 150;
-        this.left = 120
-        this.right = this.left + this.width
-        this.top = 80
-        this.bottom = this.top + this.height
+        this.width = 70;
+        this.height = 20;
+        this.x = x ;
+        this.y = y;
+        this.color=['blue','red','green','black','orange','yellow']
 
     }
 
     draw(ctx){
         ctx.beginPath();
-        ctx.fillStyle="blue"
+        ctx.fillStyle=this.color[this.damage-1]
         ctx.fillRect(this.left, this.top, this.width, this.height);
 
+    }
+    get left(){
+        return this.x;
+    }
+    get top(){
+        return this.y;
+    }
+    get right(){
+        return this.x + this.width;
+    }
+    get bottom(){
+        return this.y + this.height;
+    }
+
+    set left(val){
+        this.x = val;
     }
 }

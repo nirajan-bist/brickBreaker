@@ -7,24 +7,33 @@ class Ball{
         this.width=this.sw;
         this.height=this.sh;
         this.damage=0;
-        this.speed=2;
-        this.center={x:50, y:10};
-        this.direction=30;
+        this.speed=10;
+        this.center={x:400, y:500};
+        this.direction={x:Math.cos(getRadian(30)), y:Math.sin(getRadian(30))};
         this.radius=10;
+        
 
+    }
+
+    makeUnitDirection(){
+        let x = this.direction.x
+        let y = this.direction.y
+        let dist = Math.sqrt(x*x + y*y)
+        this.direction.x = x/dist;
+        this.direction.y = y/dist;
     }
 
     draw(ctx){
         ctx.beginPath()
-        // ctx.arc(this.center.x,this.center.y,this.radius,0,2*Math.PI);
-        ctx.fillStyle="#000"
-        ctx.fillRect(this.left, this.top, this.radius*2, this.radius*2);
+        ctx.arc(this.center.x,this.center.y,this.radius,0,2*Math.PI);
+        ctx.fillStyle='#000'
+        // ctx.fillRect(this.left, this.top, this.radius*2, this.radius*2);
         ctx.fill()
     }
 
     update(){
-        this.center.x += this.speed * Math.cos(getRadian(this.direction));
-        this.center.y += this.speed * Math.sin(getRadian(this.direction));
+        this.center.x += this.speed * this.direction.x;
+        this.center.y += this.speed * this.direction.y;
     }
 
     get top(){
