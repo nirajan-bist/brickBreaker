@@ -27,60 +27,29 @@ function getDist(v){
     return v.x * v.x + v.y* v.y;
 }
 
-function testCornorCollision(ball,brick)
-{
-    var tx, ty;
-    if (ball.center.x < brick.left) tx = brick.left;
-    else tx = brick.right;
-    
-    if (ball.center.y < brick.top) ty = brick.top;
-    else ty = brick.bottom;
-
-    var dx = ball.center.x - tx
-    var dy = ball.center.y - ty
-    var dist = Math.sqrt((dx*dx)+(dy*dy))
-    if (dist<=ball.radius) {
-        ball.direction.x += dx/dist;
-        ball.direction.y += dy/dist;
-        ball.makeUnitDirection();
-        console.log(getDist(ball.direction))
-        return true
-    }
-
-
-}
-
+var cx = false; cy= false;
 function checkBrickCollusion(ball, brick,index){
     let collusionFlag=false;
-    if (ball.right > brick.left && ball.left < brick.right && ball.center.y > brick.top && ball.center.y < brick.bottom){
-       ball.direction.x *= -1;
-       
-       if(ball.left<brick.left) 
-            ball.right = brick.left;
-       else 
-            ball.left = brick.right;
-            // log("LR",`${ball.left.toString()+" "+ball.right+" "+ball.top+" "+ball.bottom}`, brick)
-            collusionFlag = true;       
-    }
-    else if (ball.bottom > brick.top && ball.top < brick.bottom && ball.center.x > brick.left && ball.center.x < brick.right){
-        ball.direction.y *= -1;
-        if (ball.bottom > brick.bottom)
-            ball.top = brick.bottom
-        else
-            ball.bottom = brick.top
-        // log(ball.center, brick)
-        collusionFlag = true;
+    if (ball.left < brick.right && ball.right > brick.left && ball.top < brick.bottom && ball.bottom > brick.top ){
+       var side = brick.getReflectionSide(ball.prevCenter)
+       if (side == 'horizontal') ball.direction.y *= -1;
+       else if (side == 'vertical') ball.direction.x *= -1;
+       else {ball.direction.x *= -1; ball.direction.y *= -1;}
+       collusionFlag = true;
         
      }
-    else collusionFlag = testCornorCollision(ball,brick);
     
      if(collusionFlag) {
         brick.damage--;
         if (!brick.damage) bricks.splice(index,1);
-        if (Math.abs(ball.direction.y) < 0.001){
-            if (ball.direction.y < 0) ball.direction.y -= .24;
-            else ball.direction.y += .24;
+        if (Math.abs(ball.direction.y) < 0.1){
+            if (ball.direction.y < 0) ball.direction.y = - .17;
+            else ball.direction.y = .17;
+            ball.makeUnitDirection();
+            console.log("less than")
         }
+        ball.center.x = ball.prevCenter.x;
+        ball.center.y = ball.prevCenter.y;
     }
 }
 
@@ -96,21 +65,16 @@ function checkCollusion(){
     {
         ball.direction.y = - ball.direction.y;
         if (ball.top < 0) ball.top = 0;
-        else gameOver = true;
+        else {ball.bottom = canvas.height; gameOver = true;}
         // location.reload();
         // log(ball.direction)
     }
-
+    cx = false; cy= false;
     bricks.forEach(
         (brick,index)=>{checkBrickCollusion(ball,brick,index)}
         );
     
     
-    
-
-
-
-
 }
 function nextFrame(){
     // setTimeout(
@@ -120,11 +84,27 @@ function nextFrame(){
             launcher.checkBallCollusion(ball);
             draw();
             ball.update();
+
             if (!gameOver) requestAnimationFrame(nextFrame);
     //     },
     //     100
     // );
 }
+function slow(){
+    setTimeout(
+        ()=>{
+            checkCollusion();
+            launcher.x = launcher.tempX;
+            launcher.checkBallCollusion(ball);
+            draw();
+            ball.update();
+
+            if (!gameOver) requestAnimationFrame(nextFrame);
+        },
+        100
+    );
+}
+// nextFrame = slow;   
 requestAnimationFrame(nextFrame)
 window.addEventListener('resize',resize)
 window.addEventListener('mousemove', launcher.holdPosition.bind(launcher))

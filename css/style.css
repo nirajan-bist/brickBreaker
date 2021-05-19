@@ -6,6 +6,6 @@
 }
 #gameCanvas{
     
-    
+    background-color: rgba(154, 167, 155, 0.89);
     border: 1px solid red;
 }
