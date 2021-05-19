@@ -2,35 +2,26 @@
 
 // import Ball from "./Ball.js"
 
-function log(...args){
-    console.log(...args);
-}
-
-var canvas = document.getElementById('gameCanvas');
-var ctx = canvas.getContext('2d');
-function resize(){
-   canvas.width = canvas.parentElement.clientWidth;      
-   canvas.height = canvas.parentElement.clientHeight;  
-
-}
-
 
 var ball = new Ball()
+var launcher = new Launcher()
 var bricks=[]
+var gameOver = false;
 
-for (x of range(12)) bricks.push(new Brick(x*80, 1*30,5));
-for (x of range(12)) bricks.push(new Brick(x*80, 2*30, 2));
+for (x of range(12)) bricks.push(new Brick(x*80, 1*30));
+for (x of range(12)) bricks.push(new Brick(x*80, 2*30));
 for (x of range(12)) bricks.push(new Brick(x*80, 3*30));
-for (x of range(12)) bricks.push(new Brick(x*80, 4*30, 3));
-for (x of range(12)) bricks.push(new Brick(x*80, 5*30,5));
+for (x of range(12)) bricks.push(new Brick(x*80, 4*30));
+for (x of range(12)) bricks.push(new Brick(x*80, 5*30));
 for (x of range(12)) bricks.push(new Brick(x*80, 6*30));
 
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ball.draw(ctx)
     bricks.forEach((val)=>{val.draw(ctx)})
+    ball.draw(ctx)
+    launcher.draw(ctx)
+
 }
-resize();
 
 function getDist(v){
     return v.x * v.x + v.y* v.y;
@@ -52,14 +43,14 @@ function testCornorCollision(ball,brick)
         ball.direction.x += dx/dist;
         ball.direction.y += dy/dist;
         ball.makeUnitDirection();
-        // console.log(getDist(ball.direction))
+        console.log(getDist(ball.direction))
         return true
     }
 
 
 }
 
-function checkBrickCollusion(ball, brick,index, sign){
+function checkBrickCollusion(ball, brick,index){
     let collusionFlag=false;
     if (ball.right > brick.left && ball.left < brick.right && ball.center.y > brick.top && ball.center.y < brick.bottom){
        ball.direction.x *= -1;
@@ -86,11 +77,14 @@ function checkBrickCollusion(ball, brick,index, sign){
      if(collusionFlag) {
         brick.damage--;
         if (!brick.damage) bricks.splice(index,1);
+        if (Math.abs(ball.direction.y) < 0.001){
+            if (ball.direction.y < 0) ball.direction.y -= .24;
+            else ball.direction.y += .24;
+        }
     }
 }
 
 function checkCollusion(){
-    let sign = (ball.direction > 0) ? -1 : 1;
     if (ball.left < 0 || ball.right > canvas.width) 
     {
         ball.direction.x = -ball.direction.x;
@@ -102,13 +96,17 @@ function checkCollusion(){
     {
         ball.direction.y = - ball.direction.y;
         if (ball.top < 0) ball.top = 0;
-        else ball.bottom = canvas.height;
+        else gameOver = true;
+        // location.reload();
         // log(ball.direction)
     }
 
     bricks.forEach(
-        (brick,index)=>{checkBrickCollusion(ball,brick,index,sign)}
+        (brick,index)=>{checkBrickCollusion(ball,brick,index)}
         );
+    
+    
+    
 
 
 
@@ -118,16 +116,18 @@ function nextFrame(){
     // setTimeout(
     //     ()=>{
             checkCollusion();
+            launcher.x = launcher.tempX;
+            launcher.checkBallCollusion(ball);
             draw();
             ball.update();
-            requestAnimationFrame(nextFrame);
+            if (!gameOver) requestAnimationFrame(nextFrame);
     //     },
-    //     1
+    //     100
     // );
 }
-
 requestAnimationFrame(nextFrame)
 window.addEventListener('resize',resize)
+window.addEventListener('mousemove', launcher.holdPosition.bind(launcher))
 
 
 

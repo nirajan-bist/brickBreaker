@@ -7,9 +7,10 @@ class Ball{
         this.width=this.sw;
         this.height=this.sh;
         this.damage=0;
-        this.speed=10;
-        this.center={x:400, y:500};
-        this.direction={x:Math.cos(getRadian(30)), y:Math.sin(getRadian(30))};
+        this.speed=11;
+        this.center={x:356, y:400};
+        // this.center={x:725, y:250};
+        this.direction={x:Math.cos(getRadian(-120)), y:Math.sin(getRadian(30))};
         this.radius=10;
         
 
@@ -32,6 +33,7 @@ class Ball{
     }
 
     update(){
+        
         this.center.x += this.speed * this.direction.x;
         this.center.y += this.speed * this.direction.y;
     }
