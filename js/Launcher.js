@@ -1,6 +1,7 @@
+// import powerctx from "./Power.js"
 class Launcher{
     constructor(bottom=0,damage=1){
-        this.powers = [];
+        this.powers = [new Power(), new Power(5000), new Power(7000),new Power(9000)]
         this.length = 'normal'
         this.width = 180;
         this.height = 20;
@@ -16,6 +17,18 @@ class Launcher{
         ctx.beginPath();
         ctx.fillStyle=this.color[0]
         ctx.fillRect(this.x, this.y, this.width, this.height);
+        powerctx.clearRect(0,0, powerCanvas.width, powerCanvas.height)
+
+        this.powers.forEach(
+            (power, index)=>{
+                if(power.terminated) this.powers.splice(index,1)
+                else {
+                    power.activate(index);
+                    power.drawBar(powerctx);
+                    power.draw(ctx)
+                }
+            }
+        );
 
     }
 
@@ -29,9 +42,11 @@ class Launcher{
 
 
     checkBallCollusion(ball){
-        if (ball.bottom -10 < this.top) this.up = true;
+        if (ball.bottom -10 < this.top) this.up = true; // for checking ball inside the launcher (if not kepts, launcher holds the ball issue)
         if (ball.left < this.right && ball.right > this.left && ball.top < this.bottom && ball.bottom > this.top && this.up ){
             ball.direction.y *= -1;
+
+            //change direction of ball relative to positon of strike on launcher
             var diff =2*(this.x + this.width/2 - ball.center.x)/ this.width;
             ball.direction.x -=  diff;
             ball.makeUnitDirection();

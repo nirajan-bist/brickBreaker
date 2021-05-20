@@ -4,8 +4,16 @@
     height: 500px;
     margin: 10px auto;
 }
-#gameCanvas{
-    
+#gameCanvas{ 
     background-color: rgba(154, 167, 155, 0.89);
     border: 1px solid red;
+}
+#powerCanvas{ 
+    background-color: rgb(216, 201, 120);
+    border: 1px solid rgb(0, 17, 255);
+}
+.power-container{
+    width:800px;
+    height: 50px;
+    margin: 10px auto;
 }

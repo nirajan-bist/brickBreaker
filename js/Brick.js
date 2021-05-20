@@ -1,8 +1,8 @@
 class Brick{
-    constructor(x=120,y=80,damage=1){
+    constructor(x=120,y=80,damage=1,pow=null){
         this.type = null; //ice soid metal
         this.damage = damage;
-        this.power = null;
+        this.power = pow;
         this.width = 70;
         this.height = 20;
         this.x = x + 5 ;
@@ -41,6 +41,16 @@ class Brick{
         if (d1<d2) return 'horizontal';
         else if( d1>d2) return 'vertical';
         else return 'both';
+
+    }
+
+    checkDamage(index, bricks){
+        this.damage--;
+        if (!this.damage) 
+        {
+            bricks.splice(index,1);
+            return this.power;
+        }
 
     }
     get left(){

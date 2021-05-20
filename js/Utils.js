@@ -17,11 +17,23 @@ function getDistance(point,corner){
     return Math.sqrt(x*x + y*y )
 }
 
+// var frameTimestamp = Date.now();
+
+
+var bricks=[]
+var fallingPowers = [];
+var gameOver = false;
+
 var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
+var powerCanvas = document.getElementById('powerCanvas');
+var powerctx = powerCanvas.getContext('2d');
+
 function resize(){
    canvas.width = canvas.parentElement.clientWidth;      
    canvas.height = canvas.parentElement.clientHeight;  
+   powerCanvas.width = powerCanvas.parentElement.clientWidth;      
+   powerCanvas.height = powerCanvas.parentElement.clientHeight;  
 
 }
 resize();

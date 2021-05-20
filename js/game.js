@@ -2,18 +2,15 @@
 
 // import Ball from "./Ball.js"
 
-
 var ball = new Ball()
 var launcher = new Launcher()
-var bricks=[]
-var gameOver = false;
 
-for (x of range(12)) bricks.push(new Brick(x*80, 1*30));
-for (x of range(12)) bricks.push(new Brick(x*80, 2*30));
-for (x of range(12)) bricks.push(new Brick(x*80, 3*30));
-for (x of range(12)) bricks.push(new Brick(x*80, 4*30));
-for (x of range(12)) bricks.push(new Brick(x*80, 5*30));
-for (x of range(12)) bricks.push(new Brick(x*80, 6*30));
+for (x of range(12)) bricks.push(new Brick(x*80, 1*30, 6));
+for (x of range(12)) bricks.push(new Brick(x*80, 2*30, 5));
+for (x of range(12)) bricks.push(new Brick(x*80, 3*30, 4));
+for (x of range(12)) bricks.push(new Brick(x*80, 4*30, 3));
+for (x of range(12)) bricks.push(new Brick(x*80, 5*30, 2));
+for (x of range(12)) bricks.push(new Brick(x*80, 6*30, 1, new Power(10000)));
 
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -26,7 +23,7 @@ function draw(){
 function getDist(v){
     return v.x * v.x + v.y* v.y;
 }
-
+// 
 var cx = false; cy= false;
 function checkBrickCollusion(ball, brick,index){
     let collusionFlag=false;
@@ -40,8 +37,10 @@ function checkBrickCollusion(ball, brick,index){
      }
     
      if(collusionFlag) {
-        brick.damage--;
-        if (!brick.damage) bricks.splice(index,1);
+        
+        var powerOnDestroy = brick.checkDamage(index,bricks);
+        if(powerOnDestroy) fallingPowers.push(powerOnDestroy); //release power to the screen falling from top to bottom
+
         if (Math.abs(ball.direction.y) < 0.1){
             if (ball.direction.y < 0) ball.direction.y = - .17;
             else ball.direction.y = .17;
@@ -69,7 +68,7 @@ function checkCollusion(){
         // location.reload();
         // log(ball.direction)
     }
-    cx = false; cy= false;
+    // cx = false; cy= false;
     bricks.forEach(
         (brick,index)=>{checkBrickCollusion(ball,brick,index)}
         );
@@ -79,12 +78,12 @@ function checkCollusion(){
 function nextFrame(){
     // setTimeout(
     //     ()=>{
+
             checkCollusion();
             launcher.x = launcher.tempX;
             launcher.checkBallCollusion(ball);
             draw();
             ball.update();
-
             if (!gameOver) requestAnimationFrame(nextFrame);
     //     },
     //     100
@@ -98,7 +97,6 @@ function slow(){
             launcher.checkBallCollusion(ball);
             draw();
             ball.update();
-
             if (!gameOver) requestAnimationFrame(nextFrame);
         },
         100
