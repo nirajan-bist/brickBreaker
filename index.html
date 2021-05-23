@@ -10,10 +10,19 @@
 <body>
     <div class="container">
         <canvas id="gameCanvas"></canvas>
+        <div id="game-over">
+            <h1 class="title">GAME OVER</h1>
+            <div class="score">$22850</div>
+            <div class="retry"><div><img src = "img/try-again.png"></div></div>
+        </div>
     </div>
     <div class = "power-container">
         <canvas id = "powerCanvas"></canvas>
+
     </div>
+    
+    <img id="sprite" src = "img/bricks.png" style="display: none;">
+    <img id="sprite2" src = "img/sprites2.png" style="display: none;">
 </body>
 <script  src="js/Utils.js"></script>
 <script  src="js/Ball.js"></script>

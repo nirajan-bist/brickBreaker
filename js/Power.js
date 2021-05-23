@@ -1,6 +1,6 @@
 class Power {
-    constructor(time=10000){
-        this.type = 'magnet';
+    constructor(time=250, type='magnet'){
+        this.type = type;
         this.time = time;
         this.center = {x:300, y:400};
         this.bar ={x:10, y:10}
@@ -13,36 +13,54 @@ class Power {
         this.index = null;
         this.remainingTime = this.time;
         this.radius = 10;
+        this.speed = 2;
     }
 
     draw(ctx){
-        ctx.beginPath()
-        ctx.arc(this.center.x + this.index * (20 + 2* this.radius),this.center.y,this.radius,0,2*Math.PI);
-        ctx.fillStyle='#48666d'
-        ctx.fill()
+        ctx.beginPath();
+        ctx.arc(this.center.x , this.center.y ,this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle='#dd5';
+        ctx.fill();
     }
 
+    update(){
+        this.center.y += this.speed;
+    }
     activate(indx){
         if(!this.activated) 
         {
             this.activated = true;
             this.index = indx;
-            this.startTime = Date.now()
-        }
-        //check timeStamp differnce to adjust againt animationFrame freeze
-        var currentRemTime = this.time -(Date.now()-this.startTime);
-        var diff =  this.remainingTime - currentRemTime;
-        if(diff > 40) this.startTime += diff;
-        
+            this.startTime = fcount;
+        }        
     }
+
     drawBar(ctx){
         if (this.activated && !this.terminated){
-        ctx.beginPath()
-        ctx.fillStyle='#dd5145'
+        ctx.beginPath();
+        ctx.fillStyle='#dd5145';
         ctx.fillRect(this.bar.x + this.index*this.initialWidth,this.bar.y,this.width, this.height);
-        this.remainingTime = this.time - (Date.now() - this.startTime);
+        ctx.font = "16px Arial";
+        ctx.fillText(this.type, this.bar.x +this.index*this.initialWidth,this.bar.y+this.height+16)
+        this.remainingTime = this.time - (fcount - this.startTime);
         this.width = this.initialWidth  * (this.remainingTime/this.time); }
-        if(this.remainingTime<0) {log('magenet finsished');this.terminated = true;}
+        if(this.remainingTime<0) {log(this.type +' finsished');this.terminated = true;}
 
+    }
+
+    get top(){
+        return this.center.y - this.radius;
+    }
+
+    get bottom(){
+        return this.center.y + this.radius;
+    }
+    
+    get left(){
+        return this.center.x - this.radius;
+    }
+    
+    get right(){
+        return this.center.x + this.radius;
     }
 }

@@ -19,16 +19,18 @@ function getDistance(point,corner){
 
 // var frameTimestamp = Date.now();
 
-
+var fcount = 0; //count no. of frame for relative timing;
 var bricks=[]
 var fallingPowers = [];
 var gameOver = false;
+var powerTypes =['Magnet', 'Fire-Ball', 'Chakra-Ball', 'XScore','XBall','Bullets']
+var sprites = document.getElementById('sprite')
+var sprites2 = document.getElementById('sprite2');
 
 var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 var powerCanvas = document.getElementById('powerCanvas');
 var powerctx = powerCanvas.getContext('2d');
-
 function resize(){
    canvas.width = canvas.parentElement.clientWidth;      
    canvas.height = canvas.parentElement.clientHeight;  

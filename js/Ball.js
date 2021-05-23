@@ -7,13 +7,15 @@ class Ball{
         this.width=this.sw;
         this.height=this.sh;
         this.damage=0;
-        this.speed=8;
-        this.center={x:356, y:300};
+        this.speed=10;
+        this.center={x:356, y:400};
         // this.center={x:725, y:250};
         this.direction={x:Math.cos(getRadian(-30)), y:Math.sin(getRadian(-20))};
         this.radius=10;
         this.prevCenter={x: 0, y:0};
-        
+        this.wd = 135;
+        this.ht = 45;
+        this.n = 0;
 
     }
 
@@ -23,14 +25,40 @@ class Ball{
         let dist = Math.sqrt(x*x + y*y)
         this.direction.x = x/dist;
         this.direction.y = y/dist;
+       
     }
+    getRotation(){
+        let angle = Math.atan2(Math.abs(this.direction.y),Math.abs(this.direction.x)) ;
+        if (this.direction.x < 0){
+            return (this.direction.y < 0)? angle: -angle;
+        }
+        else if(this.direction.x > 0){
+            return (this.direction.y < 0)? Math.PI-angle: Math.PI+ angle;
+        }
 
+    }
+    slow(){
+        if(fcount%10==0){
+            this.n = (this.n +1)%6;
+        }
+    }
     draw(ctx){
+        ctx.save()
         ctx.beginPath()
-        ctx.arc(this.center.x,this.center.y,this.radius,0,2*Math.PI);
-        ctx.fillStyle='#000'
+        // ctx.arc(this.center.x,this.center.y,this.radius,0,2*Math.PI);
+        ctx.fillStyle='#877'
         // ctx.fillRect(this.left, this.top, this.radius*2, this.radius*2);
+        // ctx.drawImage(sprites,69,28,28,28,this.left,this.top,20,20);
+        
+        ctx.translate(this.center.x, this.center.y);
+        ctx.rotate(this.getRotation())
+        ctx.drawImage(sprites2,100,131+this.ht*this.n,135,45,-this.radius,-this.radius,135/2,45/2);
+        this.slow()
+        // ctx.setTransform(1,0,0,1,0,0)
+
+
         ctx.fill()
+        ctx.restore();
     }
 
     update(){

@@ -3,21 +3,29 @@ class Brick{
         this.type = null; //ice soid metal
         this.damage = damage;
         this.power = pow;
-        this.width = 70;
-        this.height = 20;
+        this.width = 67;
+        this.height = 23;
         this.x = x + 5 ;
         this.y = y + 5;
         this.color=['#0084ff','red','green','black','orange','yellow']
+        this.placePower();
 
     }
+
 
     draw(ctx){
         ctx.beginPath();
         ctx.fillStyle=this.color[this.damage-1]
-        ctx.fillRect(this.left, this.top, this.width, this.height);
+        // ctx.fillRect(this.left, this.top, this.width, this.height);
+        ctx.drawImage(sprites,0,0+(this.damage-1)*23,67,23,this.x,this.y,this.width,this.height);
 
     }
-    
+    placePower(){
+        if(this.power){
+        this.power.center.x = this.x + this.width/2;
+        this.power.center.y = this.y + this.height/2;
+        }
+    }
     getNearestCornorFrom(point){
         var X, signx=1;
         if (point.x < this.x + this.width/2){
