@@ -1,6 +1,6 @@
 // import powerctx from "./Power.js"
 class Launcher{
-    constructor(bottom=0,damage=1){
+    constructor(){
         this.powers = [] ;
         this.length = 1;
         this.width = 88;
@@ -87,6 +87,7 @@ class Launcher{
             }
         );
     }
+    
     checkBallCollusion(ball){
         if (ball.left < this.right && ball.right > this.left && ball.up){
             if(ball.bottom > this.top){

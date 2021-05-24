@@ -76,7 +76,6 @@ class Ball{
 class FireBall extends Ball{
     constructor(center = null, direction =null){
         super(center, direction);
-        this.wd = 135;
         this.ht = 45;
         this.n = 0;
 
@@ -106,6 +105,27 @@ class FireBall extends Ball{
         ctx.drawImage(sprites2,4,131+this.ht*this.n,135,45,-this.radius,-this.radius,135/2,45/2);
         this.slow()
         ctx.restore();
+    }
+
+}
+
+class ChakraBall extends Ball{
+    constructor(center = null, direction =null){
+        super(center, direction);
+        this.ht = 55;
+        this.n = 0;
+        this.radius = 15;
+    }
+    
+    slow(){
+        if(fcount%3==0){
+            this.n = (this.n +1)%4;
+        }
+    }
+
+    draw(ctx){
+        ctx.drawImage(sprites2,152,192+this.ht*this.n,57,55,this.left,this.top,30,30);
+        this.slow()
     }
 
 }

@@ -2,7 +2,7 @@
 
 // import Ball from "./Ball.js"
 
-var balls = [new Ball(), new FireBall()]
+var balls = [new Ball(), new ChakraBall()]
 var launcher = new Launcher()
 
 for (x of range(12)) bricks.push(new Brick(x*80, 0*30, 6));
