@@ -1,5 +1,5 @@
 class Ball{
-    constructor(){
+    constructor(center = null,direction = null){
         this.sx=0;
         this.sy=0;
         this.sw=0;
@@ -7,10 +7,10 @@ class Ball{
         this.width=this.sw;
         this.height=this.sh;
         this.damage=0;
-        this.speed=10;
-        this.center={x:356, y:400};
+        this.speed=5;
+        this.center= center || {x:356, y:400};
         // this.center={x:725, y:250};
-        this.direction={x:Math.cos(getRadian(-30)), y:Math.sin(getRadian(-20))};
+        this.direction= direction || {x:Math.cos(getRadian(-30)), y:Math.sin(getRadian(-30))};
         this.radius=10;
         this.prevCenter={x: 0, y:0};
         this.wd = 135;
@@ -52,7 +52,7 @@ class Ball{
         
         ctx.translate(this.center.x, this.center.y);
         ctx.rotate(this.getRotation())
-        ctx.drawImage(sprites2,100,131+this.ht*this.n,135,45,-this.radius,-this.radius,135/2,45/2);
+        ctx.drawImage(sprites2,4,131+this.ht*this.n,135,45,-this.radius,-this.radius,135/2,45/2);
         this.slow()
         // ctx.setTransform(1,0,0,1,0,0)
 

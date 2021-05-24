@@ -18,7 +18,7 @@
     /* background:url('../img/a.jpg')  ; */
     /* background-size: contain 60px;  */
     /* background-repeat: no-repeat; */
-    border: 1px solid red;
+    border: 5px solid  black;
 }
 #powerCanvas{ 
     /* background:rgba(154, 167, 155, 0.89); */
@@ -26,7 +26,7 @@
 }
 .power-container{
     width:800px;
-    height: 50px;
+    height: 100px;
     margin: 10px auto;
 }
 /* html {

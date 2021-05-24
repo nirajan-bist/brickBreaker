@@ -6,7 +6,12 @@ function range(number){
     return Array(number).keys()
 }
 
-
+function getRandomDirection(){
+    let rad = Math.random() * (Math.PI - 0.17) + 0.17;
+    let x = Math.cos(-rad);
+    let y = Math.sin(-rad);
+    return {x:x, y:y};
+}
 function log(...args){
     console.log(...args);
 }
@@ -23,7 +28,9 @@ var fcount = 0; //count no. of frame for relative timing;
 var bricks=[]
 var fallingPowers = [];
 var gameOver = false;
-var powerTypes =['Magnet', 'Fire-Ball', 'Chakra-Ball', 'XScore','XBall','Bullets']
+
+var gameOverDialog = document.getElementById('game-over');
+
 var sprites = document.getElementById('sprite')
 var sprites2 = document.getElementById('sprite2');
 
