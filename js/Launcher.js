@@ -15,6 +15,7 @@ class Launcher{
         this.hasMagnet = false;
         this.hasBullets = false;
         this.holdBalls =[];
+        
     }
 
     draw(ctx){
@@ -87,7 +88,7 @@ class Launcher{
         );
     }
     checkBallCollusion(ball){
-        if (ball.left < this.right && ball.right > this.left ){
+        if (ball.left < this.right && ball.right > this.left && ball.up){
             if(ball.bottom > this.top){
                 if(ball.bottom < this.top + ball.radius ){
                     ball.direction.y = -Math.abs(ball.direction.y);
@@ -96,7 +97,7 @@ class Launcher{
                     var diff =2*(this.x + this.width/2 - ball.center.x)/ this.width;
                     ball.direction.x -=  diff;
                     ball.makeUnitDirection();
-                    ball.bottom = launcher.top - 2;
+                    
                     
                     if (Math.abs(ball.direction.y) < 0.1){
                         if (ball.direction.y < 0) ball.direction.y = - .27;
@@ -106,6 +107,7 @@ class Launcher{
                     }
                     ball.center.x = ball.prevCenter.x;
                     ball.center.y = ball.prevCenter.y;
+                    ball.bottom = launcher.top;
                     if (this.hasMagnet) {
                         // log('hi');
                         ball.savedSpeed = ball.speed; 
@@ -117,8 +119,8 @@ class Launcher{
                             );
                         }
                 }
-                else if (ball.left < this.left){ ball.right = this.left; ball.direction.x = - Math.abs(ball.direction.x)}
-                else if (ball.right < this.right){ ball.left = this.right; ball.direction.x = Math.abs(ball.direction.x)} 
+                else if (ball.left < this.left){ ball.right = this.left; ball.direction.x = - Math.abs(ball.direction.x); ball.up = false;}
+                else if (ball.right < this.right){ ball.left = this.right; ball.direction.x = Math.abs(ball.direction.x); ball.up = false;} 
             
             }
         }

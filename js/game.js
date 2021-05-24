@@ -2,27 +2,16 @@
 
 // import Ball from "./Ball.js"
 
-var balls = [new Ball()]
+var balls = [new Ball(), new FireBall()]
 var launcher = new Launcher()
 
 for (x of range(12)) bricks.push(new Brick(x*80, 0*30, 6));
 for (x of range(12)) bricks.push(new Brick(x*80, 1*30, 5));
 for (x of range(12)) bricks.push(new Brick(x*80, 2*30, 4));
 for (x of range(12)) bricks.push(new Brick(x*80, 3*30, 1, new Magnet));
-for (x of range(12)) bricks.push(new Brick(x*80, 4*30, 1, new Expand()));
-for (x of range(12)) bricks.push(new Brick(x*80, 5*30, 1, new BallMultiplier()));
-// for (x of range(12)) bricks.push(new Brick(x*80, 7*30, 6, new Power()));
-// for (x of range(12)) bricks.push(new Brick(x*80, 8*25, 1, new Power()));
-// for (x of range(12)) bricks.push(new Brick(x*80, 9*25, 1, new Power()));
-// for (x of range(12)) bricks.push(new Brick(x*80, 10*25, 1, new Power()));
-// for (x of range(12)) bricks.push(new Brick(x*80, 11*25, 1, new Power()));
-// for (x of range(12)) bricks.push(new Brick(x*80, 12*25, 1, new Power()));
-// for (x of range(12)) bricks.push(new Brick(x*80, 13*25, 1, new Power()));
-// bricks.forEach(
-//     (brick, index)=>{
-//         if(brick.power) brick.power.type = powerTypes[index % 6]; //6 is length of powerTypes
-//     }
-// )
+for (x of range(12)) bricks.push(new Brick(x*80, 4*30, 1, new BallMultiplier()));
+for (x of range(12)) bricks.push(new Brick(x*80, 5*30, 1, new Expand()));
+
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     bricks.forEach((brick)=>{brick.draw(ctx)})

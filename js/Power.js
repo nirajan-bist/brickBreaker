@@ -111,7 +111,7 @@ class Bullet extends Power{
     }
 }
 
-class ChakraBall extends Power{
+class ChakraBallPower extends Power{
     constructor(){
         super();
         this.type = "ChakraBall";
@@ -148,15 +148,16 @@ class BallMultiplier extends Power{
     }
 
     powerActivate(){
-        log('hi');
-        var r=0;
         balls.forEach(
             (ball)=>{
                 let center = {...ball.center}
                 let direction = getRandomDirection();
-                log(center,direction);
-                let newball = new Ball(center,direction);
-                newball.direction.x += .18;
+                let newball = new ball.constructor(center,direction);
+                newball.direction.y += .28;
+                if (Math.abs(newball.direction.y) < 0.1){
+                    if (newball.direction.y < 0) newball.direction.y = - .27;
+                    else newball.direction.y = .27;
+                }
                 newball.makeUnitDirection();
                 balls.push(newball);
             });
@@ -164,7 +165,7 @@ class BallMultiplier extends Power{
     }
 }
 
-class FireBall extends Power{
+class FireBallPower extends Power{
     constructor(){
         super();
         this.type = "FireBall";
