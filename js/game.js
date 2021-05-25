@@ -1,16 +1,28 @@
 
 
 // import Ball from "./Ball.js"
-
-var balls = [new Ball(), new ChakraBall()]
+var firstBall = new Ball();
+firstBall.speed = 0;
+var balls = [firstBall]
 var launcher = new Launcher()
+firstBall.center = launcher.getLauncherCenter()
+launcher.holdBalls.push({ball:firstBall, xdiff: launcher.width/2})
+// launcher.holdBalls.push(balls.pop())
+log(launcher.holdBalls)
 
 for (x of range(12)) bricks.push(new Brick(x*80, 0*30, 6));
-for (x of range(12)) bricks.push(new Brick(x*80, 1*30, 5));
-for (x of range(12)) bricks.push(new Brick(x*80, 2*30, 4));
+for (x of range(12)) bricks.push(new Brick(x*80, 1*30, 5, new Expand));
+for (x of range(12)) bricks.push(new Brick(x*80, 2*30, 2, new ChakraBall));
 for (x of range(12)) bricks.push(new Brick(x*80, 3*30, 1, new Magnet));
-for (x of range(12)) bricks.push(new Brick(x*80, 4*30, 1, new BallMultiplier()));
-for (x of range(12)) bricks.push(new Brick(x*80, 5*30, 1, new Expand()));
+for (x of range(12)) bricks.push(new Brick(x*80, 4*30, 1, new FireBall()));
+for (x of range(12)) bricks.push(new Brick(x*80, 5*30, 2, new BallMultiplier()));
+
+// var level1 = new BrickGrid([
+//     [0],[1],[2,2],[3,1],[5],[11,4,'m']
+// ]);
+// var currentLevel = level1;
+
+// bricks = currentLevel.onlybricks;
 
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -24,15 +36,25 @@ function draw(){
 
 
 function checkBrickCollusion(ball){
+    var xtra = 40;
+    var left = ball.left 
+    var right = ball.right
+    var top = ball.top 
+    var bottom = ball.bottom 
+    var once = 1;
+    var mul = 0;
+    var collusionFlag;
     bricks.forEach(
         (brick,index)=>{
-        let collusionFlag=false;
-        if (ball.left < brick.right && ball.right > brick.left && ball.top < brick.bottom && ball.bottom > brick.top ){
-        var side = brick.getReflectionSide(ball.prevCenter)
-        if (side == 'horizontal') ball.direction.y *= -1;
-        else if (side == 'vertical') ball.direction.x *= -1;
-        else {ball.direction.x *= -1; ball.direction.y *= -1;}
-        collusionFlag = true;
+        collusionFlag=false;
+        if (left - xtra*mul < brick.right && right + xtra*mul > brick.left && top-xtra*mul < brick.bottom && bottom +xtra*mul > brick.top ){
+            if(once){
+            var side = brick.getReflectionSide(ball.prevCenter)
+            if (side == 'horizontal') ball.direction.y *= -1;
+            else if (side == 'vertical') ball.direction.x *= -1;
+            else {ball.direction.x *= -1; ball.direction.y *= -1;}
+            }
+            collusionFlag = true;
             
         }
 
@@ -42,14 +64,18 @@ function checkBrickCollusion(ball){
             if(powerOnDestroy) {
                 fallingPowers.push(powerOnDestroy); //release power to the screen falling from top to bottom
             }
-            if (Math.abs(ball.direction.y) < 0.1){
+            if (once){
+                if(Math.abs(ball.direction.y) < 0.1){
                 if (ball.direction.y < 0) ball.direction.y = - .27;
                 else ball.direction.y = .27;
                 ball.makeUnitDirection();
-                console.log("less than")
+                console.log("less than");
+                ball.center.x = ball.prevCenter.x;
+                ball.center.y = ball.prevCenter.y;
+                once=0;
+                mul=1;
+                }
             }
-            ball.center.x = ball.prevCenter.x;
-            ball.center.y = ball.prevCenter.y;
         }
     });
 }
@@ -100,6 +126,7 @@ function updateFrame(){
         ball.update();
     });
     fallingPowers.forEach((power)=>power.update());
+    scoreElement.innerText = '$'+score;
 }
 
 function nextFrame(){

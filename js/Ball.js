@@ -8,6 +8,7 @@ class Ball{
         this.height=this.sh;
         this.damage=0;
         this.speed=5;
+        this.savedSpeed = this.speed;
         this.center= center || {x:356, y:400};
         this.direction= direction || {x:Math.cos(getRadian(-30)), y:Math.sin(getRadian(-30))};
         this.radius=10;

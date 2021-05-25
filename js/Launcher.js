@@ -15,7 +15,7 @@ class Launcher{
         this.hasMagnet = false;
         this.hasBullets = false;
         this.holdBalls =[];
-        
+        this.scoreMultiplier = 1;
     }
 
     draw(ctx){
@@ -40,7 +40,8 @@ class Launcher{
 
     }
     addPower(power){
-        if (power instanceof Expand || power instanceof Shrink || power instanceof BallMultiplier) {power.powerActivate(); return}
+        if (power instanceof Expand || power instanceof Shrink || power instanceof BallMultiplier ||
+            power instanceof ChakraBallPower || power instanceof FireBallPower)  {power.powerActivate(); return}
         var currentIndex = -1;
         var blankIndex = -1;
         if (this.powers.length == 0) 
@@ -138,6 +139,9 @@ class Launcher{
         delete this.holdBalls;
         this.holdBalls =[];
 
+    }
+    getLauncherCenter(){
+        return {x:this.x + this.width/2, y:this.y - firstBall.radius};
     }
     get left(){
         return this.x;

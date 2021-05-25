@@ -2,6 +2,7 @@ class Brick{
     constructor(x=120,y=80,damage=1,pow=null){
         this.type = null; //ice soid metal
         this.damage = damage;
+        this.strength = damage;
         this.power = pow;
         this.width = 67;
         this.height = 23;
@@ -54,6 +55,8 @@ class Brick{
 
     checkDamage(index, bricks){
         this.damage--;
+        score += (this.strength - this.damage )* launcher.scoreMultiplier ;
+        // score = parseInt(score);
         if (!this.damage) 
         {
             bricks.splice(index,1);
