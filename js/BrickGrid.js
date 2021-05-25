@@ -25,7 +25,7 @@ class BrickGrid{
                 this.onlybricks.push(brik);
             }
         )
-        log(this.bricks);
+        // log(this.bricks);
     }
 
     getPower(code){

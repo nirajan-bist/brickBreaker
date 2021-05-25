@@ -13,7 +13,7 @@ class Launcher{
         this.life = 10
         this.tempX=this.x;
         this.hasMagnet = false;
-        this.hasBullets = true ;
+        this.hasBullets = false ;
         this.holdBalls =[];
         this.scoreMultiplier = 1;
         this.bullets = new Bullets();
@@ -93,7 +93,7 @@ class Launcher{
                 if (power.left < this.right && power.right > this.left && power.bottom > this.top ){
                     this.addPower(power);
                     fallingPowers.splice(index, 1);
-                    log(this.powers)
+                    // log(this.powers)
                 }
                 else if( power.bottom > this.bottom) fallingPowers.splice(index,1);
             }

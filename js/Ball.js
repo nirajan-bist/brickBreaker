@@ -103,10 +103,10 @@ class FireBall extends Ball{
 
     draw(ctx){
         ctx.save()
-        ctx.beginPath()
-        ctx.strokeStyle ="red"
-        ctx.rect(this.left-this.xoffset, this.top - this.yoffset, this.width, this.height);
-        ctx.stroke();
+        // ctx.beginPath()
+        // ctx.strokeStyle ="red"
+        // ctx.rect(this.left-this.xoffset, this.top - this.yoffset, this.width, this.height);
+        // ctx.stroke();
         ctx.translate(this.center.x, this.center.y);
         ctx.rotate(this.getRotation())
         ctx.drawImage(sprites2,4,131+this.ht*this.n,135,45,-this.radius,-this.radius,135/2,45/2);

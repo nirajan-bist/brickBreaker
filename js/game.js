@@ -8,7 +8,7 @@ var launcher = new Launcher()
 firstBall.center = launcher.getLauncherCenter()
 launcher.holdBalls.push({ball:firstBall, xdiff: launcher.width/2})
 // launcher.holdBalls.push(balls.pop())
-log(launcher.holdBalls)
+// log(launcher.holdBalls)
 
 // // for (x of range(10)) bricks.push(new Brick(x*80, 0*30, 5));
 // // for (x of range(10)) bricks.push(new Brick(x*80, 1*30, 5, new Expand()));
@@ -18,8 +18,8 @@ log(launcher.holdBalls)
 // for (x of range(10)) bricks.push(new Brick(x*80, 5*30, 5, new ScoreMultiplier()));
 
 var level1 = new BrickGrid([
-    [0],[1],[2,2],[3,1],[5],[6,4,'m'],[7,1,'sh'],
-    [13,1,'ex'],[34,5,'c'],[38,4,'b']
+    [0,1,'bx'],[1,3],[2,2,'sx'],[3,1],[5,2],[6,4,'m'],[7,1,'sh'],
+    [13,1,'ex'],[34,5,'c'],[38,4,'b'],[47,5,'f']
 ]);
 var currentLevel = level1;
 
