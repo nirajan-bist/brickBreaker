@@ -21,12 +21,31 @@ function getDistance(point,corner){
     var y = point.y-corner.y;
     return Math.sqrt(x*x + y*y )
 }
+function createCustomLevel(){
+    removeWindowEvents();
+    levelCreator.init();
+    creator = true;
+}
 
-function resume(){
-    creator=false;
-    launcher.replay = true;
-    requestAnimationFrame(nextFrame);
-    
+function resumeGame(e){
+    if(creator){log('hi')
+    levelCreator.removeEvents();
+    addWindowEvents();
+    creator = false;
+    requestAnimationFrame(nextFrame)
+}
+}
+function setHighScore(){
+    if(highestScore < score && currentLevel.level > 0) {
+        localStorage.setItem('@highScore',score);
+        highestScore = score;
+        highestScoreElement.innerText = score;
+    }
+
+}
+
+function getHighScore(){
+    return localStorage.getItem('@highScore') || 0;
 }
 
 
@@ -39,12 +58,18 @@ var gameOver = false;
 var win = false;
 
 var score = 0;
+var previousStageScore = 0;
+var highestScore = getHighScore();
 var gameOverDialog = document.getElementById('game-over');
 var winDialog = document.getElementById('you-won');
 var scoreElement = document.getElementById('score-value');
+var highestScoreElement = document.getElementById('highest-score');
 var replayButton = document.getElementById('replay');
 var nextStageButton = document.getElementById('next-stage');
 var levelElement = document.getElementById('level');
+var lifeIndicators = document.getElementById('life-indicators');
+var resumeBtn = document.getElementById('resume');
+// log(lifeIndicators)
 
 var sprites = document.getElementById('sprite')
 var sprites2 = document.getElementById('sprite2');
@@ -54,6 +79,8 @@ var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 var powerCanvas = document.getElementById('powerCanvas');
 var powerctx = powerCanvas.getContext('2d');
+
+
 function resize(){
    canvas.width = canvas.parentElement.clientWidth;      
    canvas.height = canvas.parentElement.clientHeight;  
