@@ -3,12 +3,65 @@
      padding: 0;
      box-sizing: border-box;
      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+     color:#fff;
  }
- body{
+ button{
+     color:#0f103f;
+ }
+
+ /* Utility */
+ .flex{
+     display: flex;
+ }
+.btn{
+    color:#0f103f;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: .5em;
+    font-size: 1vw;
+    margin:5px;
+}
+
+.w1{
+    width: 100%;
+}
+
+.tc{
+    text-align: center;
+}
+
+.none{
+    display: none;
+}
+
+.block{
+    display: block;
+}
+
+/* Styles */
+
+.arcade-custom{
+     font-size: 3vw;
+     align-items: center;
+}
+
+.active-mode{
+    background-color: #ffee00;
+    box-shadow: 0 0 .8em #fff;
+    font-size: 2vw;
+}
+
+.level{
+    width:90%;
+}
+.level:active{
+    background-color: #ffee00;
+}
+body{
      background:20px 20px, url('../img/background.png')  ;
      background-size: 174px 140px;
      /* background-size: auto 100vh; */
-    }
+}
     
 .button-controllers{
     /* display: flex; */

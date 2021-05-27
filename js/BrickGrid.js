@@ -62,7 +62,6 @@ class BrickGrid{
         this.customBricks =[]
         levelCreator.bricks.forEach(
             (brick,index)=>{
-                log(brick)
                 this.customBricks.push([levelCreator.brickNumberArray[index], brick.damage, this.setPower(brick.power)])
             }
         )

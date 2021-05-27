@@ -11,11 +11,18 @@
     <!-- Left Side  Current Level  and set of Controls -->
     <div class="sidebar left-panel noclick">
         <div id="level" class="score-heading">Level</div>
-        <div class="button-controllers">
+        <div class="button-controllers none">
             <button class="custom-level" onclick="createCustomLevel()">Custom Level</button>
             <button id = "resume" class="custom-level" >Resume</button>
             <button id = "play-custom" class="custom-level" onclick="playCustomLevel()">Play Custom</button>
         </div>
+
+        <div class="flex arcade-custom">
+            <div id="arcade" class="btn w1 tc active-mode">Arcade</div>
+            <div id="custom" class="btn w1 tc">Custom</div>
+        </div>
+        <div id="display-area"></div>
+       
     </div>
 
     <!-- Main Game Play Area  and Level Editing Area -->

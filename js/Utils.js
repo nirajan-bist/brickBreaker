@@ -28,12 +28,44 @@ function createCustomLevel(){
 }
 
 function resumeGame(e){
-    if(creator){log('hi')
+    if(creator){
     levelCreator.removeEvents();
     addWindowEvents();
     creator = false;
-    requestAnimationFrame(nextFrame)
+    clickedonce = true;
+    show(custom);
+    hide(createLevel,addBrick,removeBrick);
 }
+}
+
+function toggleEditMode(){
+    if (brickAddMode){
+        show(addBrick);
+        hide(removeBrick);
+        brickAddMode = false;
+    }
+    else{
+        show(removeBrick);
+        hide(addBrick);
+        brickAddMode = true;
+    }
+}
+
+function hide(...el){
+    el.forEach(
+        (elem)=>{
+        elem.classList.remove('block');
+        elem.classList.add('none');
+        }
+    )
+}
+function show(...el){
+    el.forEach(
+        (elem)=>{
+        elem.classList.remove('none');
+        elem.classList.add('block')
+        }
+    )
 }
 function setHighScore(){
     if(highestScore < score && currentLevel.level > 0) {
@@ -52,10 +84,13 @@ function getHighScore(){
 // var frameTimestamp = Date.now();
 
 var fcount = 0; //count no. of frame for relative timing;
+var currentMode = 'arcade';
 var bricks=[]
 var fallingPowers = [];
 var gameOver = false;
 var win = false;
+var clickedonce;
+var brickAddMode = true;
 
 var score = 0;
 var previousStageScore = 0;

@@ -178,20 +178,6 @@ function removeWindowEvents(){
     window.removeEventListener('click',launcher.onClick);
 }
 
-function playNextLevel(e){
-    previousStageScore = score;
-    currentLevel.level++;
-    if(currentLevel.level === 1) previousStageScore = 0;
-    playCurrentLevel()
-
-}
-
-function playCurrentLevel(e){
-    initLevel()
-    score = previousStageScore;
-    requestAnimationFrame(nextFrame);
-}
-
 function resetStageForNextLife(){
     fcount = 0;
     fallingPowers =[]
@@ -205,13 +191,34 @@ function resetStageForNextLife(){
     launcher.holdBalls.push({ball:firstBall, xdiff: launcher.width/2})
 }
 
-function playCustomLevel(){
-    if (levelCreator.bricks.length<1) return;
+function playNextLevel(e){
+    if(currentMode=='arcade'){
+        previousStageScore = score;
+        currentLevel.level++;
+        if(currentLevel.level === 1) previousStageScore = 0;
+        playCurrentLevel()
+    }
+}
+
+function playCurrentLevel(e){
+    initLevel()
+    score = previousStageScore;
+    requestAnimationFrame(nextFrame);
+}
+
+function playCustomLevel(e){
+    if (levelCreator.bricks.length<1) {
+        alert("No Bricks to Play! Please Create Custom Level First")
+        return;
+    }
     currentLevel.level = 0;
     score=0;
     currentLevel.makeCustomLevel();
     initLevel();
-    resumeGame();
+    if(clickedonce){
+        requestAnimationFrame(nextFrame)
+        clickedonce = false;
+    }
 }
 
 function initLevel(){
@@ -234,6 +241,70 @@ function initLevel(){
 
 window.onload = ()=>{
     levelCreator = new LevelCreator();
-    requestAnimationFrame(nextFrame);}
+    makeDivs();
+    requestAnimationFrame(nextFrame);
+}
+function makeDivs(){
+    darea = document.getElementById('display-area')
+    predef = document.createElement('div')
+    predef.id = "predefined-levels"
+    custom = document.createElement('div')
+    custom.id = "custom-levels"
+    var level;
+    function divCreate(id,txt){
+        level = document.createElement('div')
+        level.classList.add('btn','w1','tc','level')
+        level.innerText = txt;
+        level.id = id;
+        return level;
+    }
 
+    for(let i=1; i<=5; i++){
+        divCreate(i+'level',"Level " + i);
+        predefinedLevelElements.push(level);
+        predef.append(level)
+    }
+        
+        divCreate('create-level', "Create Custom Level");
+        custom.append(level)
+        divCreate('save-level', "Save Level");
+        level.classList.add('none');        
+
+    for(let i=1; i<=1; i++){
+        divCreate(i+'level',"Play Custom Level " );
+        // level.addEventListener('click', playCustomLevel);
+        customLevelElements.push(level);
+        custom.append(level)
+    }
+    
+    divCreate('save-level', "Save Level");
+    level.classList.add('none');
+    darea.appendChild(level)
+    createLevel = level;
+    createLevel.onclick = resumeGame;
+    
+    divCreate('add-brick', "ADD BRICK");
+    level.classList.add('none');
+    darea.appendChild(level)
+    addBrick=level;
+
+    divCreate('remove-brick', "REMOVE BRICK");
+    level.classList.add('none');
+    darea.appendChild(level)
+    removeBrick =level;
+    addBrick.onclick = removeBrick.onclick = toggleEditMode;
+
+    custom.classList.add('none')
+    darea.appendChild(predef)
+    darea.appendChild(custom)
+
+}
+var predefinedLevelElements=[];
+var customLevelElements=[];
+var darea;
+var predef;
+var custom;
+var createLevel;
+var addBrick;
+var removeBrick;
 addWindowEvents();

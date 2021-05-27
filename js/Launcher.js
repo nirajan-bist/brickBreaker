@@ -145,9 +145,43 @@ class Launcher{
     }
 
     onClick(e){
-        if(launcher.replay) {
-            launcher.replay = false;
-            return}
+        if(e.target.id==='arcade'){
+            document.getElementById('custom').classList.remove('active-mode')
+            e.target.classList.add('active-mode')
+            show(predef);
+            hide(custom, createLevel)
+            currentMode = 'arcade'
+            return;
+        }
+        else if(e.target.id==='custom'){
+            document.getElementById('arcade').classList.remove('active-mode')
+            e.target.classList.add('active-mode')
+            show(custom);
+            hide(predef, createLevel)
+
+            currentMode = 'custom';
+            return;
+            
+        }
+        else if (e.target.id === 'create-level'){
+            show(createLevel,removeBrick)
+            hide(custom)
+            createCustomLevel();
+            return;
+        }
+        
+        var level = parseInt(e.target.id)
+        if(level){
+            if(currentMode=='arcade'){
+            currentLevel.level = level;
+            initLevel();
+            if(clickedonce) {requestAnimationFrame(nextFrame); clickedonce=false;}
+        }
+            else{
+                if(level==1) playCustomLevel(1);     
+            }
+            return;
+        }
         launcher.holdBalls.forEach(
             (hball)=>{
                 hball.ball.speed = hball.ball.savedSpeed;

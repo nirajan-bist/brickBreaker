@@ -55,11 +55,16 @@ class LevelCreator{
     placeBrick(e){
         var brickNumber =levelCreator.y/30*10 + levelCreator.x/80;
         var atIndex = levelCreator.brickNumberArray.indexOf(brickNumber)
+        if(!brickAddMode){
+            if(atIndex == -1) return;
+            levelCreator.bricks.splice(atIndex,1);
+            levelCreator.draw();
+            return;
+        }
         if (levelCreator.brickSelected ) {
             if(atIndex === -1){
                 levelCreator.bricks.push(new Brick(levelCreator.x,levelCreator.y, levelCreator.damage));
                 levelCreator.brickNumberArray.push(brickNumber);
-                log(brickNumber)
             }
             else{
                 levelCreator.bricks[atIndex]=new Brick(levelCreator.x,levelCreator.y, levelCreator.damage);
@@ -67,7 +72,6 @@ class LevelCreator{
         }
         else{  
             if (atIndex !==-1) {
-                log(brickNumber,'hi')
                 levelCreator.bricks[atIndex].power = new levelCreator.powers[levelCreator.selectedPowerIndex].constructor
                 levelCreator.bricks[atIndex].placePower();
             }
@@ -84,6 +88,7 @@ class LevelCreator{
                 if(brick.power) brick.power.draw(ctx)
             }
         )
+        if(!brickAddMode) return;
         if(this.brickSelected) ctx.drawImage(spritesCreator,0,0+(this.damage-1)*23,67,23,this.x +5,this.y+5,this.width,this.height);
         else {
             let pow = this.powers[this.selectedPowerIndex];
