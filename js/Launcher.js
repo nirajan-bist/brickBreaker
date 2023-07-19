@@ -75,6 +75,7 @@ class Launcher{
     }
 
     holdPosition(e){
+        e.preventDefault();
         var rct=canvas.getBoundingClientRect();
         launcher.tempX = e.clientX - rct.left- launcher.width/2;
         if (launcher.tempX < 0) launcher.tempX = 0 + launcher.bullets.width * launcher.hasBullets;
