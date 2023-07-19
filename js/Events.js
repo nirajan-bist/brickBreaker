@@ -1,5 +1,6 @@
 function addWindowEvents(){
     window.addEventListener('mousemove', launcher.holdPosition)
+    window.addEventListener('touchmove', launcher.holdPosition)
     window.addEventListener('click',launcher.onClick);
     replayButton.addEventListener('click',playCurrentLevel)
     nextStageButton.addEventListener('click', playNextLevel)
@@ -7,6 +8,7 @@ function addWindowEvents(){
 
 function removeWindowEvents(){
     window.removeEventListener('mousemove', launcher.holdPosition)
+    window.removeEventListener('touchmove', launcher.holdPosition)
     window.removeEventListener('click',launcher.onClick);
 }
 

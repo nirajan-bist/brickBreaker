@@ -51,12 +51,14 @@ class LevelCreator{
     removeEvents(){
         canvas.removeEventListener('mousemove',this.moveBrick);
         canvas.removeEventListener('click',this.placeBrick);
+        canvas.removeEventListener('touchmove', this.moveBrick)
         powerCanvas.removeEventListener('click',this.select); 
     }
     addEvents(){
         canvas.addEventListener('mousemove',this.moveBrick);
         canvas.addEventListener('click',this.placeBrick);
         powerCanvas.addEventListener('click',this.select); 
+        canvas.addEventListener('touchmove', this.moveBrick)
     }
     moveBrick(e){
         var rct=canvas.getBoundingClientRect();
